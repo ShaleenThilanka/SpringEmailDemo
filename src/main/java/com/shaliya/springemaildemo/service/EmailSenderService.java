@@ -3,35 +3,44 @@ package com.shaliya.springemaildemo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Map;
 
+
+@PropertySource({"classpath:application.properties"})
 @Service
 public class EmailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public boolean sendMessageWithAttachment(String toEmail) {
 
-        SimpleMailMessage message=new SimpleMailMessage();
+    @Value("${FORGET_PWD_LINK}")
+    String username;
 
-        message.setFrom("shaleen.diss@gmail.com");
-        message.setTo(toEmail);
-        message.setText("Na mm me nikn mail ekak ewwe spring mail sender eka use krala");
-        message.setSubject("Wade hari");
 
-           mailSender.send(message);
-        System.out.println("Mail Sent Successfully......");
-        return  true;
-    }
+//    public boolean sendMessageWithAttachment(String toEmail) {
+//
+//        SimpleMailMessage message=new SimpleMailMessage();
+//
+//        message.setFrom("shaleen.diss@gmail.com");
+//        message.setTo(toEmail);
+//        message.setText("Na mm me nikn mail ekak ewwe spring mail sender eka use krala");
+//        message.setSubject("Wade hari");
+//
+//           mailSender.send(message);
+//        System.out.println("Mail Sent Successfully......");
+//        return  true;
+//    }
 
 
     public boolean sendEmail (String to) throws MessagingException {
@@ -181,13 +190,13 @@ public class EmailSenderService {
                 "                <!-- COPY -->\n" +
                 "                <tr>\n" +
                 "                    <td bgcolor=\"#111111\" align=\"left\" style=\"padding: 0px 30px 40px 30px; border-radius: 0px 0px 4px 4px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;\" >\n" +
-                "                        <p style=\"margin: 0;\"><a href=\"${process.env.FORGET_PWD_LINK + token}\" target=\"_blank\" style=\"color: #7c72dc;\">See how easy it is to get started</a></p>\n" +
+                "                        <p style=\"margin: 0;\"><a href=https://www.youtube.com/watch?v=W59SaJxrUjU target=\"_blank\" style=\"color: #7c72dc;\">See how easy it is to get started</a></p>\n" +
                 "                    </td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
                 "                    <td>\n" +
                 "                        <p style=\"margin: 0;\">\n" +
-                "                            ${process.env.FORGET_PWD_LINK + token}\n" +
+                "                            https://www.youtube.com/watch?v=W59SaJxrUjU\n" +
                 "                        </p>\n" +
                 "                    </td>\n" +
                 "                </tr>\n" +
@@ -237,11 +246,17 @@ public class EmailSenderService {
 
         helper.setFrom("noreply@baeldung.com");
         helper.setTo(to);
-        helper.setSubject("Wel Come"+to);
+        helper.setSubject("WelCome"+to);
         helper.setText(html, true);
         mailSender.send(message);
+
+
+        System.out.println(username);
+
         return  true;
     }
+
+
 
 
 }
