@@ -28,19 +28,17 @@ public class EmailSenderService {
     String username;
 
 
-//    public boolean sendMessageWithAttachment(String toEmail) {
-//
-//        SimpleMailMessage message=new SimpleMailMessage();
-//
-//        message.setFrom("shaleen.diss@gmail.com");
-//        message.setTo(toEmail);
-//        message.setText("Na mm me nikn mail ekak ewwe spring mail sender eka use krala");
-//        message.setSubject("Wade hari");
-//
-//           mailSender.send(message);
-//        System.out.println("Mail Sent Successfully......");
-//        return  true;
-//    }
+    public boolean sendMessageWithEmail(String toEmail,String body,String subject) {
+
+        SimpleMailMessage message=new SimpleMailMessage();
+
+        message.setFrom("shaleen.diss@gmail.com");
+        message.setTo(toEmail);
+        message.setText(body);
+        message.setSubject(subject);
+           mailSender.send(message);
+        return  true;
+    }
 
 
     public boolean sendEmail (String to) throws MessagingException {
@@ -244,7 +242,7 @@ public class EmailSenderService {
                 "</html>";
 
 
-        helper.setFrom("noreply@baeldung.com");
+        helper.setFrom("shaleen.info@gmail.com");
         helper.setTo(to);
         helper.setSubject("WelCome"+to);
         helper.setText(html, true);

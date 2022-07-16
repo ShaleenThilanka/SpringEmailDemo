@@ -21,8 +21,18 @@ public class EmailSenderController {
     private EmailSenderService senderService;
 
     @PostMapping( params = {"email"})
-    public ResponseEntity<StandardResponse> sendEmail(@RequestParam(value = "email") String  email ) throws MessagingException {
+    public ResponseEntity<StandardResponse> sendStaticEmail(@RequestParam(value = "email") String  email ) throws MessagingException {
         boolean success = senderService.sendEmail(email);
+
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(201, success + " success added", success),
+                HttpStatus.CREATED);
+    }
+    @PostMapping(path = "/send",params = {"email","subject","body"})
+    public ResponseEntity<StandardResponse> sendSubject(@RequestParam(value = "email") String  email ,
+                                                        @RequestParam(value = "subject") String  subject ,
+                                                        @RequestParam(value = "body") String  body ) throws MessagingException {
+        boolean success = senderService.sendMessageWithEmail(email,body,subject);
 
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(201, success + " success added", success),
