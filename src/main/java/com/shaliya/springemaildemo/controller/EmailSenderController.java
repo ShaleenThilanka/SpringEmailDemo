@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -21,8 +22,8 @@ public class EmailSenderController {
     private EmailSenderService senderService;
 
     @PostMapping( params = {"email"})
-    public ResponseEntity<StandardResponse> sendStaticEmail(@RequestParam(value = "email") String  email ) throws MessagingException {
-        boolean success = senderService.sendEmail(email);
+    public ResponseEntity<StandardResponse> sendStaticEmail(@RequestParam(value = "email") String email,@RequestParam(value = "subject") String  subject  ) throws MessagingException {
+        boolean success = senderService.sendEmail(email,subject);
 
         return new ResponseEntity<StandardResponse>(
                 new StandardResponse(201, success + " success added", success),
